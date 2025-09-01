@@ -1,19 +1,47 @@
-name: agentic
+name: llms
 channels:
   - conda-forge
+  - defaults
 dependencies:
   - python=3.11
   - pip
+  - python-dotenv
+  - requests
+  - numpy
+  - pandas
+  - scipy
+  - pytorch
+  - jupyterlab
+  - ipywidgets
+  - matplotlib
+  - scikit-learn
+  - chromadb
+  - jupyter-dash
+  - pyarrow
   - pip:
-    - openai==1.14.3
-    - anthropic==0.25.0
-    - langchain==0.1.14
-    - langchain-openai==0.1.1
-    - crewai==0.28.8
-    - python-dotenv==1.0.0  
-    - fastapi==0.110.0
-    - uvicorn[standard]==0.29.0
-    - pydantic==2.6.4
-    - tenacity==8.2.3
-    - tiktoken==0.6.0
-    - redis==5.0.3
+    - beautifulsoup4
+    - plotly
+    - transformers
+    - sentence-transformers
+    - datasets==3.6.0
+    - openai
+    - anthropic
+    - google-generativeai
+    - gradio
+    - gensim
+    - modal
+    - ollama
+    - psutil
+    - setuptools
+    - speedtest-cli
+    - langchain
+    - langchain-core
+    - langchain-text-splitters
+    - langchain-openai
+    - langchain-chroma
+    - langchain-community
+    - feedparser
+    - twilio
+    - pydub
+    - protobuf==3.20.2
+    - wandb
