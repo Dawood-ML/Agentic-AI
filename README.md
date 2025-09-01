@@ -1,186 +1,300 @@
 # Agentic AI System
 
-A modular AI agent system designed for research, content creation, and automated workflows using multiple AI providers.
+An enterprise-grade modular AI agent platform that orchestrates multiple AI providers to deliver automated research, content generation, and intelligent workflow execution.
 
-## Project Structure
+## Overview
+
+This system provides a production-ready framework for building AI-powered automation workflows. It combines the strengths of OpenAI, Anthropic, and web search capabilities to create sophisticated agent behaviors that can operate autonomously or integrate with existing business processes.
+
+## Architecture
 
 ```
-D:\Agentic-AI>
-├── .env                          # Environment variables and API keys
-├── .gitignore                    # Git ignore file
-├── environment.yaml              # Conda environment configuration
-├── README.md                     # This file
+agentic-ai/
+├── .env                          # Environment configuration
+├── .gitignore                    # Version control exclusions
+├── environment.yaml              # Python dependencies
+├── README.md                     # Documentation
 └── src/
-    ├── agents/
-    │   ├── research_agent.py     # Research automation agent
+    ├── agents/                   # AI agent implementations
+    │   ├── research_agent.py     # Autonomous research agent
     │   └── __init__.py
-    ├── api/
-    │   ├── main.py              # API server entry point
+    ├── api/                      # REST API layer
+    │   ├── main.py              # FastAPI application
     │   └── __init__.py
-    ├── core/
-    │   ├── config.py            # Configuration management
+    ├── core/                     # System configuration
+    │   ├── config.py            # Environment management
     │   └── __init__.py
-    ├── tests/
-    │   ├── test_tools.py        # Unit tests for tools
+    ├── tests/                    # Test suite
+    │   ├── test_tools.py        # Tool validation tests
     │   └── __init__.py
-    ├── tools/
-    │   ├── web_Search.py        # Web search functionality
+    ├── tools/                    # Utility functions
+    │   ├── web_Search.py        # Web search integration
     │   └── __init__.py
-    └── workflows/
-        ├── content_creation.py   # Content generation workflows
+    └── workflows/                # Business logic
+        ├── content_creation.py   # Content generation pipeline
         └── __init__.py
 ```
 
-## Prerequisites
+## Quick Start
 
-- Python 3.8 or higher
-- Conda package manager
-- API keys for required services
+### Prerequisites
 
-## Installation
+Before installation, ensure you have:
+- **Python 3.8+**: Required for modern async/await syntax and type hints
+- **Conda**: Package and environment management (recommended over pip for dependency isolation)
+- **API Access**: Valid credentials for AI services
 
-### Step 1: Clone the Repository
+### Installation Process
 
-```bash
-git clone <repository-url>
-cd Agentic-AI
-```
+**1. Environment Setup**
 
-### Step 2: Create Conda Environment
+Create an isolated Python environment to prevent dependency conflicts:
 
 ```bash
 conda env create -f environment.yaml
 conda activate agentic
 ```
 
-### Step 3: Configure Environment Variables
+The conda environment ensures consistent dependency versions across development and production environments.
 
-Create a `.env` file in the project root directory with the following structure:
+**2. API Configuration**
 
-```
-OPENAI_API_KEY=your_openai_api_key_here
-ANTHROPIC_API_KEY=your_anthropic_api_key_here
-TAVILY_API_KEY=your_tavily_api_key_here
-```
-
-**Required API Keys:**
-- **OPENAI_API_KEY**: Obtain from [OpenAI Platform](https://platform.openai.com/api-keys)
-- **ANTHROPIC_API_KEY**: Obtain from [Anthropic Console](https://console.anthropic.com/)
-- **TAVILY_API_KEY**: Optional - for enhanced web search capabilities
-
-### Step 4: Verify Installation
+Create a `.env` file in the project root. This file stores sensitive credentials outside of your codebase:
 
 ```bash
-python -c "from src.core.config import settings; print('Configuration loaded successfully')"
+# Required - OpenAI integration
+OPENAI_API_KEY=sk-your-openai-key-here
+
+# Required - Anthropic Claude integration  
+ANTHROPIC_API_KEY=sk-ant-your-anthropic-key-here
+
+# Optional - Enhanced web search
+TAVILY_API_KEY=tvly-your-tavily-key-here
 ```
 
-## Usage
+**Why these keys are needed:**
+- **OpenAI**: Powers GPT models for text generation and analysis
+- **Anthropic**: Provides Claude models for reasoning and safety-focused tasks
+- **Tavily**: Enables real-time web search and information retrieval
 
-### Starting the API Server
+**3. Verification**
+
+Confirm your setup is working correctly:
 
 ```bash
-python src/api/main.py
+python -c "from src.core.config import settings; print(f'✓ {settings.PROJECT_NAME} v{settings.PROJECT_VERSION} configured')"
 ```
 
-### Running Research Agent
+## System Components
+
+### Research Agent (`src/agents/research_agent.py`)
+
+Autonomous agent that conducts comprehensive research by:
+- Formulating search strategies based on input topics
+- Gathering information from multiple sources
+- Synthesizing findings into structured reports
+- Maintaining context across research sessions
+
+**Use Case**: Market research, competitive analysis, technical documentation
+
+### Content Creation Workflow (`src/workflows/content_creation.py`)
+
+End-to-end content generation pipeline that:
+- Analyzes content requirements and audience
+- Generates drafts using appropriate AI models
+- Applies quality checks and refinements
+- Outputs publication-ready content
+
+**Use Case**: Blog posts, marketing copy, technical documentation
+
+### Web Search Tools (`src/tools/web_Search.py`)
+
+Real-time information retrieval system that:
+- Executes targeted web searches
+- Filters and ranks results by relevance
+- Extracts key information from web pages
+- Handles rate limiting and error recovery
+
+**Use Case**: Current events, market data, factual verification
+
+### API Server (`src/api/main.py`)
+
+RESTful API interface that:
+- Exposes agent capabilities as HTTP endpoints
+- Handles authentication and request validation
+- Manages concurrent agent executions
+- Provides webhook support for integrations
+
+**Use Case**: Third-party integrations, microservice architecture
+
+## API Key Setup Guide
+
+### OpenAI API Key
+
+1. Visit [OpenAI Platform](https://platform.openai.com/)
+2. Sign in to your account
+3. Navigate to API Keys section
+4. Create new secret key
+5. Copy the key (starts with `sk-`)
+6. Add to your `.env` file
+
+### Anthropic API Key
+
+1. Visit [Anthropic Console](https://console.anthropic.com/)
+2. Sign in or create account
+3. Go to API Keys section
+4. Generate new key
+5. Copy the key (starts with `sk-ant-`)
+6. Add to your `.env` file
+
+### Tavily API Key (Optional)
+
+1. Visit [Tavily](https://tavily.com/)
+2. Sign up for API access
+3. Generate API key from dashboard
+4. Copy the key (starts with `tvly-`)
+5. Add to your `.env` file
+
+## Usage Examples
+
+### Basic Research Workflow
 
 ```bash
+# Activate environment
+conda activate agentic
+
+# Run research agent with topic
 python src/agents/research_agent.py
 ```
 
-### Content Creation Workflow
+### API Server Deployment
 
 ```bash
+# Start development server
+python src/api/main.py
+
+# Server will be available at http://localhost:8000
+# API documentation at http://localhost:8000/docs
+```
+
+### Content Generation
+
+```bash
+# Execute content creation workflow
 python src/workflows/content_creation.py
 ```
 
-## Running Tests
+## Testing
+
+The test suite validates system functionality and integration points:
 
 ```bash
-python -m pytest src/tests/
+# Run all tests
+python -m pytest src/tests/ -v
+
+# Run specific test file
+python -m pytest src/tests/test_tools.py -v
+
+# Run with coverage report
+python -m pytest src/tests/ --cov=src --cov-report=html
 ```
 
-## Configuration
+## Configuration Management
 
-The system uses environment variables for configuration management. All settings are centralized in `src/core/config.py`.
+The system uses a centralized configuration approach through `src/core/config.py`. This design:
 
-Key configuration options:
-- API keys for various AI services
-- Project metadata
-- Service endpoints
+- **Prevents credential leakage**: API keys never appear in source code
+- **Enables environment-specific configs**: Different settings for dev/staging/production
+- **Provides validation**: System fails fast if required credentials are missing
+- **Centralizes access**: Single import point for all configuration values
 
-## Modules Overview
+## Deployment Considerations
 
-### Core (`src/core/`)
-- **config.py**: Centralized configuration and environment variable management
+### Security
 
-### Agents (`src/agents/`)
-- **research_agent.py**: Automated research and data gathering agent
+- Ensure `.env` file is never committed to version control
+- Use environment-specific API keys for different deployment stages
+- Implement API key rotation policies
+- Monitor API usage and set billing alerts
 
-### API (`src/api/`)
-- **main.py**: REST API server for external integrations
+### Scaling
 
-### Tools (`src/tools/`)
-- **web_Search.py**: Web search and information retrieval tools
+- The modular architecture supports horizontal scaling
+- Each agent can run in separate containers
+- API server supports load balancing
+- Tools are stateless and thread-safe
 
-### Workflows (`src/workflows/`)
-- **content_creation.py**: Automated content generation pipelines
+### Monitoring
 
-### Tests (`src/tests/`)
-- **test_tools.py**: Unit tests for tool functionality
-
-## Security Considerations
-
-- Never commit the `.env` file to version control
-- Store API keys securely
-- Rotate API keys regularly
-- Use environment-specific configurations for different deployment stages
+- Implement logging for all agent activities
+- Monitor API rate limits and costs
+- Track workflow execution times
+- Set up alerts for system failures
 
 ## Troubleshooting
 
-### Common Issues
+### Environment Issues
 
-**Missing API Keys Error:**
-```
-ValueError: OPENAI_API_KEY environment variable not set.
-```
-**Solution:** Ensure your `.env` file exists and contains the required API keys.
+**Problem**: Import errors when running modules
+**Solution**: Ensure you're in the project root directory and conda environment is activated
 
-**Conda Environment Issues:**
-```bash
-# Remove and recreate environment
-conda env remove -n agentic
-conda env create -f environment.yaml
-conda activate agentic
-```
+**Problem**: `ValueError: OPENAI_API_KEY environment variable not set`
+**Solution**: Verify your `.env` file exists and contains valid API keys
 
-**Import Errors:**
-Ensure you're running commands from the project root directory and the conda environment is activated.
+### API Connectivity
 
-## Development
+**Problem**: API calls failing with authentication errors
+**Solution**: Check that API keys are current and have sufficient credits/permissions
 
-### Adding New Modules
+**Problem**: Rate limiting errors
+**Solution**: Implement exponential backoff or reduce concurrent requests
 
-1. Create new module in appropriate directory under `src/`
-2. Add `__init__.py` file if creating a new package
-3. Import and configure in relevant workflow files
-4. Add corresponding tests in `src/tests/`
+### Performance
 
-### Code Structure Guidelines
+**Problem**: Slow response times
+**Solution**: Check network connectivity and API service status
 
-- Keep modules focused and single-purpose
-- Use the centralized configuration system
-- Follow existing import patterns
-- Add appropriate error handling
+**Problem**: High memory usage
+**Solution**: Monitor agent state management and implement cleanup routines
 
-## Support
+## Support and Maintenance
 
-For technical issues or questions:
-1. Check the troubleshooting section above
-2. Verify all prerequisites are met
-3. Ensure API keys are correctly configured
-4. Review error logs for specific issues
+### Regular Maintenance Tasks
 
-## License
+1. **Update Dependencies**: Review and update packages monthly
+2. **API Key Rotation**: Rotate keys according to security policies
+3. **Log Review**: Monitor system logs for errors or performance issues
+4. **Backup Configuration**: Maintain secure backups of configuration files
 
-This project is proprietary software developed for client use.
+### Getting Help
+
+For technical support:
+1. Check this documentation first
+2. Review error logs for specific error messages
+3. Verify environment configuration
+4. Test individual components in isolation
+
+## Development Guidelines
+
+### Adding New Features
+
+1. Follow the existing module structure
+2. Import configuration from `src.core.config`
+3. Add appropriate error handling
+4. Include unit tests for new functionality
+5. Update this documentation
+
+### Code Quality Standards
+
+- Use type hints for all function parameters and return values
+- Implement proper error handling with informative messages
+- Follow PEP 8 style guidelines
+- Add docstrings for all public functions and classes
+
+## Version Information
+
+- **Current Version**: 1.0.0
+- **Python Compatibility**: 3.8+
+- **Last Updated**: 2025
+
+This system is designed for production use and follows enterprise software development best practices.
